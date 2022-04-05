@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Lorem.</h1>
-	<p>Lorem ipsum dolor sit amet.</p>
-	<input type="text" />
-	<input type="text" />
+<%
+	int sum = 0;
+	for(int i = 1; i <= 10; i++ ) {
+		sum += i;
+	}
+%>
+1부터 10까지의 합은 <%= sum %> 입니다.
 </body>
 </html>

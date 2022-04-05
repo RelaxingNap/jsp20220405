@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
+<%@ page import = "java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Lorem.</h1>
-	<p>Lorem ipsum dolor sit amet.</p>
-	<input type="text" />
-	<input type="text" />
+<h1>한글 utf-8</h1>
 </body>
 </html>

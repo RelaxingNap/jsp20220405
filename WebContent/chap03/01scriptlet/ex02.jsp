@@ -7,9 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Lorem.</h1>
-	<p>Lorem ipsum dolor sit amet.</p>
-	<input type="text" />
-	<input type="text" />
+	<h1>html 코드</h1>
+	
+	
+	<h1>out객체 : JspWriter(javax.servlet.jsp.JspWriter)</h1>
+	<%
+	out.write("안녕");
+		for(int i = 0; i < 10; i++) {
+			out.write("<p>반복문</p>");
+			
+		}
+	%>
 </body>
 </html>

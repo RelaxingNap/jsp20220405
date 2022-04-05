@@ -7,9 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Lorem.</h1>
-	<p>Lorem ipsum dolor sit amet.</p>
-	<input type="text" />
-	<input type="text" />
+	<h1>1~10 출력</h1>
+	
+	<% //p{$}*10
+		for(int i = 1; i <= 10; i++){
+			out.write("<p>" + i + "</p>");
+		}
+	%>
+	
 </body>
 </html>
