@@ -14,7 +14,7 @@
 <p>보통은 page directive밑에 작성</p>
 
 <%
-// 스크립트릿
+// 스크립트릿 _jspservice메소드 안에서 쓰이는 명령문
 	System.out.println("스크립트릿 명령문");
 %>
 
