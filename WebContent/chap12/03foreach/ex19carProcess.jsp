@@ -1,0 +1,37 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import = "java.util.*" %>
+<%@ page import = "chap11.*" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<% request.setCharacterEncoding("utf-8"); %>
+
+<%
+	String model = request.getParameter("model");
+	String priceStr = request.getParameter("price");
+	String available = request.getParameter("available");
+	String[] owners = request.getParameterValues("owner");
+	
+	int price = Integer.parseInt(priceStr);
+	
+	Car car = new Car(model,price);
+	if(available != null && available.equals("true")) {
+		car.setAvailable(true);
+	}
+	
+	if(owners != null) {
+		car.setOwners(Arrays.asList(owners));
+	}
+	
+	// car를 database에 저장해야 하는데
+	// application에 저장하는 걸로 대체...... (해서는 안되지만 임시로 함)
+	
+	List<Car> cars = (List<Car>) application.getAttribute("cars");
+	
+	if(cars == null) {
+		cars = new ArrayList<>();
+		application.setAttribute("cars", cars);
+	}
+	cars.add(car);
+	response.sendRedirect("ex18carForm.jsp");
+	
+%>

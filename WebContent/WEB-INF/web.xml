@@ -25,4 +25,122 @@
   	<!-- 단위 : 분(minutes) -->
   	<session-timeout>30</session-timeout>
   </session-config>
+  
+  <!-- servlet 설정 -->
+  <!-- 설정파일에서 클래스명이 servlet이름으로 자동으로 되기 때문에 다른 package에서 같은이름으로 servlet을 만들 수 없음. -->
+  <!-- url pattern의 경로가 오게 되면, 실제로 동작하는 servlet class로 mapping되어 동작함. -->
+  <servlet>
+  	<servlet-name>S3Servlet01</servlet-name>
+  	<servlet-class>chap17.servlet3.S3Servlet01</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>S3Servlet01</servlet-name>
+  	<url-pattern>/s3/servlet01</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>S3Servlet02</servlet-name>
+  	<servlet-class>chap17.servlet3.S3Servlet02</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>S3Servlet02</servlet-name>
+  	<url-pattern>/s3/servlet02</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>S3Servlet03</servlet-name>
+  	<servlet-class>chap17.servlet3.S3Servlet03</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>S3Servlet03</servlet-name>
+  	<url-pattern>/s3/servlet03</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>S3Servlet04</servlet-name>
+  	<servlet-class>chap17.servlet3.S3Servlet04</servlet-class>
+  	<!-- 매우 오래 걸리는 요청을 미리 받아서 실행 시킬 수 있게 하는 option tag. 숫자가 작을수록 먼저 실행됨.-->
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>S3Servlet04</servlet-name>
+  	<url-pattern>/s3/servlet04</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>S3Servlet05</servlet-name>
+  	<servlet-class>chap17.servlet3.S3Servlet05</servlet-class>
+  	<!-- 필요한 파라미터 값 설정 가능 -->
+  	<init-param>
+  		<param-name>param1</param-name>
+  		<param-value>value1</param-value>
+  	</init-param>
+  	<init-param>
+  		<param-name>dbUrl</param-name>
+  		<param-value>MariaDB</param-value>
+  	</init-param>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>S3Servlet05</servlet-name>
+  	<url-pattern>/s3/servlet05</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>S3Servlet06</servlet-name>
+  	<servlet-class>chap17.servlet3.S3Servlet06</servlet-class>
+  	<init-param>
+  		<!-- 경로 설정 -->
+  		<param-name>viewName</param-name>
+  		<param-value>/WEB-INF/view/chap17/ex06.jsp</param-value>
+  	</init-param>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>S3Servlet06</servlet-name>
+  	<url-pattern>/s3/servlet06</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>S4Servlet01</servlet-name>
+  	<servlet-class>chap17.servlet4.S4Servlet01</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>S4Servlet01</servlet-name>
+  	<!-- 정확한 경로를 작성 안해도 실행시킬 수 있음 -->
+  	<!-- <url-pattern>/s4/servlet01</url-pattern> -->
+  	<!-- pattern matching -->
+  	<!-- <url-pattern>/s4/url1/url2/*</url-pattern> -->
+  	<!-- 확장자 매칭 -->
+  	<!-- <url-pattern>*.do</url-pattern> -->
+  	<!-- 매칭되는 패턴이 없을때 명시되지 않은 모든 요청 -->
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>S4Servlet02</servlet-name>
+  	<servlet-class>chap17.servlet4.S4Servlet02</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>S4Servlet02</servlet-name>
+  	<url-pattern>/s4/s4servlet/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>S4Servlet03</servlet-name>
+  	<servlet-class>chap17.servlet4.S4Servlet03</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>S4Servlet03</servlet-name>
+  	<url-pattern>*.action</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>
