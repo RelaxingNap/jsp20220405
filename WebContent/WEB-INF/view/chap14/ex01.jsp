@@ -12,8 +12,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:forEach items="${cities }" var="city">
-		<p>${city }</p>
-	</c:forEach>
+	<ul>
+		<c:forEach items="${cities }" var="city">
+			<li>${city }</li>
+		</c:forEach>
+	</ul>
+	
+	<ul>
+		<c:forEach items="${countries }" var="country">
+			<li>${country }</li>
+		</c:forEach>
+	</ul>
+	
+	<!-- chap14db연동해서 data뽑아오는 과정 해볼것 -->
 </body>
 </html>
