@@ -77,20 +77,6 @@ public class JDBCListener implements ServletContextListener {
 		
 		application.setAttribute("dbpool", pool); // 연결된 DB의 DataSource를 Application영역에 저장
 		
-		/*try (Connection con = pool.getConnection();
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT 333");) {
-		
-			if (rs.next()) {
-				if (rs.getInt(1) == 333) {
-					System.out.println("데이터베이스 연결 성공!");
-					
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 	
 }
