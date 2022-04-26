@@ -5,7 +5,14 @@ public class Customer {
 	private String country;
 	private String city;
 	private String postalCode;
+	private int id;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getPostalCode() {
 		return postalCode;
 	}

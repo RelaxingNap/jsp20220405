@@ -91,8 +91,8 @@ public class S14Servlet16 extends HttpServlet {
 		try ( Connection con = ds.getConnection();
 			  PreparedStatement pstmt = con.prepareStatement(sql);){
 			 
-			  String firstName = request.getParameter("firstName");
 			  String lastName = request.getParameter("lastName");
+			  String firstName = request.getParameter("firstName");
 			  String birthDate = request.getParameter("birthDate");
 			  String photo = request.getParameter("photo");
 			  String notes = request.getParameter("notes");

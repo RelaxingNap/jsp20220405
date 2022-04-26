@@ -32,7 +32,7 @@
 			<input type="date" name="birthDate" value="${employee.birthDate }" />
 			<br />
 			Picture :
-			<input type="text" name="pic" value="${employee.photo }" />
+			<input type="text" name="photo" value="${employee.photo }" />
 			<br />
 			Notes :
 			<textarea name="notes">${employee.notes }</textarea>
