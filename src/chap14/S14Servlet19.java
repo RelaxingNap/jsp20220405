@@ -48,13 +48,13 @@ public class S14Servlet19 extends HttpServlet {
 		
 		if(pageNumStr == null || pageNumStr.trim().equals("")) {
 			pageNumStr = "1";
-		}
+		} // 현재페이지를 받아올때 page파라미터가 없거나 빈칸일 수 있으므로 그 경우 초기값을 1로 설정함
 		
-		int pageNum = Integer.parseInt(pageNumStr);
-		int startPage = (pageNum - 1) / 10 * 10 + 1;
-		int endPage = startPage + 9;
-		int startRowNum = (pageNum - 1) * 10;
-		int total = 0;
+		int pageNum = Integer.parseInt(pageNumStr); // 현재 페이지
+		int startPage = (pageNum - 1) / 10 * 10 + 1;// 현재 페이지가 속해있는 범위의 시작페이지 
+		int endPage = startPage + 9; // 현재 페이지가 속해있는 범위의 끝페이지
+		int startRowNum = (pageNum - 1) * 10; // 쿼리에 현재페이지가 속해있는 범위의 시작페이지를 보내기 위한 변수
+		int total = 0; // 등록된 고객 수 읽어오기위한 변수
 		
 		ServletContext application = getServletContext();
 		DataSource ds = (DataSource) application.getAttribute("dbpool");
@@ -88,17 +88,17 @@ public class S14Servlet19 extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		int lastPage = (total - 1) / 10 + 1;
+		int lastPage = (total - 1) / 10 + 1; // 맨 마지막 페이지
 		
 		endPage = Math.min(lastPage, endPage); // endPage를 계산한것을 그대로 두면 없는 페이지까지 보여질 수 있다.
-				
+											   // 그래서 두 페이지 중 작은것을 계산하여 foreach를 수행하도록 함.	
 		request.setAttribute("customerList", list);
-		request.setAttribute("startPage", startPage);  
-		request.setAttribute("endPage", endPage);
-		request.setAttribute("prevPage", startPage - 10);
-		request.setAttribute("nextPage", startPage + 10);
-		request.setAttribute("currentPage", pageNum);
-		request.setAttribute("lastPage", lastPage);
+		request.setAttribute("startPage", startPage); // 네비게이션바 한줄의 시작페이지 
+		request.setAttribute("endPage", endPage); // 네비게이션바 한줄의 끝 페이지
+		request.setAttribute("prevPage", startPage - 10); // 네비게이션바 한 줄의 이전페이지
+		request.setAttribute("nextPage", startPage + 10); // 네비게이션바 한 줄의 다음페이지
+		request.setAttribute("currentPage", pageNum); // 현재 클릭한 페이지
+		request.setAttribute("lastPage", lastPage); // 맨 마지막 페이지
 		
 		String path = "/WEB-INF/view/chap14/ex13.jsp";
 		request.getRequestDispatcher(path).forward(request, response);
