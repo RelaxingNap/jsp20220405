@@ -1,10 +1,12 @@
-SELECT * FROM sys.sys_config;
+SELECT city, country FROM Customers;
+SELECT Country FROM Customers; 
 
--- database 이동
-USE sys;
-SELECT * FROM sys_config;
-SELECT * FROM w3schools.Customers;
-SELECT * FROM Customers;
+-- 중복 제거
+SELECT DISTINCT(Country) FROM Customers;
+SELECT DISTINCT Country  FROM Customers;
 
-USE w3schools;
-SELECT * FROM Customers;
+-- Suppliers 테이블에서 중복없이 Country column 컬럼 조회
+SELECT DISTINCT Country FROM Suppliers;
+SELECT Country FROM Suppliers;
+
+SELECT city FROM Customers;
