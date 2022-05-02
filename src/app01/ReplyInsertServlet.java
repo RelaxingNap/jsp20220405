@@ -11,71 +11,71 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import app01.dao.BoardDao;
-import app01.dto.BoardDto;
+import app01.dao.ReplyDao;
+import app01.dto.ReplyDto;
 
 /**
- * Servlet implementation class BoardInsertServlet
+ * Servlet implementation class ReplyInsertServlet
  */
-@WebServlet("/board/insert")
-public class BoardInsertServlet extends HttpServlet {
+@WebServlet("/reply/insert")
+public class ReplyInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private DataSource ds;
-	
+	private DataSource ds;      
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardInsertServlet() {
+    public ReplyInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
-    @Override
+    
     public void init() throws ServletException { 
     	// 한번만 실행되면 되고, application영역이기 때문에, init()에서 처음에 미리 실행시켜둠
     	// 잘 안씀.
     	ServletContext application = getServletContext();
     	this.ds = (DataSource) application.getAttribute("dbpool");
     }
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-//		String path = "/WEB-INF/view/app01/insert.jsp";
-//		request.getRequestDispatcher(path).forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// request 파라미터 가공
-		String title = request.getParameter("title");
-		String body = request.getParameter("body");
 		
-		//dto : data transfer object. 정보전달 객체. javabeans객체
-		BoardDto dto = new BoardDto();
-		dto.setTitle(title);
-		dto.setBody(body);
-		// db에 전달할 내용 세팅
-		// 전달 시 외부환경세팅(인코딩방식 같은것)은 필터로 세팅할것
+		//request parameter 수집/가공
+		String content = request.getParameter("replyContent");
+		String boardId = request.getParameter("boardId");
+		ReplyDto replyDto = new ReplyDto();
+		replyDto.setContent(content);
+		replyDto.setBoardId(Integer.parseInt(boardId));
 		
-		// db에 입력 -> 따로 뺌. 유지보수하기 힘듬.
-		 
-		try (Connection con = ds.getConnection();) {
-
-			// DAO (Data Access Object) - DB에 접근하여 query를 실행하는 java객체
-			// 각 method마다 필요한 query문을 작성해 놓고 실행하면됨.
-			BoardDao dao = new BoardDao();
-			boolean success = dao.insert(con, dto);
-			
+		//business logic 처리
+		ReplyDao dao = new ReplyDao();
+		boolean success = false;
+		
+		try(Connection con = ds.getConnection();) {
+			success = dao.insert(con, replyDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// forward /redirect
-		String path = request.getContextPath() + "/board/get?id=" + dto.getId();
-		response.sendRedirect(path);
+		
+		//결과 셋팅
+		String location = request.getContextPath() + "/board/get?id=" + replyDto.getBoardId();
+		if(success) {
+			location += "&rs=true";
+		} else {
+			location += "&rs=false";
+		}
+		
+		//forward or redirect
+		response.sendRedirect(location);
 	}
 
 }

@@ -36,6 +36,15 @@
   	<session-timeout>30</session-timeout>
   </session-config>
   
+  <servlet>
+  	<servlet-name>NowServlet</servlet-name>
+  	<servlet-class>chap17.book.NowServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>NowServlet</servlet-name>
+  	<url-pattern>/now</url-pattern>
+  </servlet-mapping>
+    
   <!-- servlet 설정 -->
   <!-- 설정파일에서 클래스명이 servlet이름으로 자동으로 되기 때문에 다른 package에서 같은이름으로 servlet을 만들 수 없음. -->
   <!-- url pattern의 경로가 오게 되면, 실제로 동작하는 servlet class로 mapping되어 동작함. -->
@@ -195,6 +204,7 @@
   	<filter-name>filter04</filter-name>
   	<url-pattern>/s5/*</url-pattern>
   	<url-pattern>/board/*</url-pattern>
+  	<url-pattern>/reply/*</url-pattern>
   </filter-mapping>
   
   <filter>
