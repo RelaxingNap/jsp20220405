@@ -41,8 +41,8 @@ public class BoardInsertServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		String path = "/WEB-INF/view/app01/insert.jsp";
-//		request.getRequestDispatcher(path).forward(request, response);
+		String path = "/WEB-INF/view/app01/insert.jsp";
+		request.getRequestDispatcher(path).forward(request, response);
 	}
 
 	/**
@@ -74,21 +74,14 @@ public class BoardInsertServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		// forward /redirect
-<<<<<<< Updated upstream
 		String path = request.getContextPath() + "/board/get?id=" + dto.getId();
-=======
-<<<<<<< HEAD
-		String path = request.getContextPath() + "/board/list";
+
+		//String path = request.getContextPath() + "/board/list";
 		if(success) {
-			path += "?successInsert=true";
+			path += "&successInsert=true";
 		} else {
-			path += "?successInsert=false";
+			path += "&successInsert=false";
 		}
-				
-=======
-		String path = request.getContextPath() + "/board/get?id=" + dto.getId();
->>>>>>> 3363a7cc711ef6fe137df1c1c2c2f183253bccb4
->>>>>>> Stashed changes
 		response.sendRedirect(path);
 	}
 

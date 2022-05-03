@@ -12,6 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script>
 	$(function(){
+		
 		$("#edit-button1").click(function() {
 			$("#input1").removeAttr("readonly");
 			$("#textarea1").removeAttr("readonly");
@@ -31,67 +32,30 @@
 				form1.submit();
 			}
 		});
-	});
-</script>
+		
+		// reply-edit-toggle 버튼 클릭시 댓글 보여주는 div 숨기고, 
+		// 수정 form 보여주기
+		$(".reply-edit-toggle-button").click(function() {
 
-
-<script>
-
-// reply-edit-toggle 버튼 클릭시 댓글 보여주는 div 숨기고, 
-// 수정 form 보여주기
-	$(function(){
-		$(".reply-edit-toggle-button").click(function(){
-			
 			const replyId = $(this).attr("data-reply-id");
 			const displayDivId = "#replyDisplayContainer" + replyId;
 			const editFormId = "#replyEditFormContainer" + replyId;
-			
+
 			$(displayDivId).hide();
 			$(editFormId).show();
 		});
-		
+
 		$(".reply-delete-button").click(function() {
 			const replyId = $(this).attr("data-reply-id");
 			const message = "댓글을 삭제하시겠습니까? ";
-			
-			if(confirm(message)) {
+
+			if (confirm(message)) {
 				$("#replyDeleteInput1").val(replyId); // input element의 value를 세팅
 				$("#replyDeleteForm1").submit();
 			}
 		});
-		
 	});
 </script>
-
-
-<script>
-
-// reply-edit-toggle 버튼 클릭시 댓글 보여주는 div 숨기고, 
-// 수정 form 보여주기
-	$(function(){
-		$(".reply-edit-toggle-button").click(function(){
-			
-			const replyId = $(this).attr("data-reply-id");
-			const displayDivId = "#replyDisplayContainer" + replyId;
-			const editFormId = "#replyEditFormContainer" + replyId;
-			
-			$(displayDivId).hide();
-			$(editFormId).show();
-		});
-		
-		$(".reply-delete-button").click(function() {
-			const replyId = $(this).attr("data-reply-id");
-			const message = "댓글을 삭제하시겠습니까? ";
-			
-			if(confirm(message)) {
-				$("#replyDeleteInput1").val(replyId); // input element의 value를 세팅
-				$("#replyDeleteForm1").submit();
-			}
-		});
-		
-	});
-</script>
-
 
 <title>Insert title here</title>
 </head>
@@ -168,6 +132,7 @@
 	<div class="container mt-3">
 		<div class="row">
 			<div class="col">
+				<h3>댓글 ${board.numOfReply }개</h3>
 				<ul class="list-group">
 					<c:forEach items="${replyList }" var="reply">
 						<li class="list-group-item">
@@ -177,13 +142,13 @@
 									${reply.prettyInserted }
 								</div>
 								${reply.content }
-								<button class="reply-edit-toggle-button" id="replyEditToggleButton${reply.id }" data-reply-id="${reply.id }">
+								<button class="reply-edit-toggle-button" id="replyEditToggleButton${reply.id }" 
+									data-reply-id="${reply.id }">
 									<i class="fa-solid fa-pen-to-square"></i>
 								</button>
 								<button class="reply-delete-button" data-reply-id="${reply.id }">
 									<i class="fa-solid fa-trash-can"></i>
 								</button>
-								
 							</div>
 
 							<div id="replyEditFormContainer${reply.id }" style="display: none;">
@@ -193,7 +158,7 @@
 										<input type="hidden" name="replyId" value="${reply.id }" />
 										<input class="form-control" type="text" name="replyContent" value="${reply.content }" required />
 										<button class="btn btn-outline-secondary"><i class="fa-solid fa-comment dots"></i></button>
-										
+
 									</div>
 								</form>
 							</div>

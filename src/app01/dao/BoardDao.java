@@ -20,18 +20,10 @@ public class BoardDao {
 		// connection 전달받음
 		// dto(java beans객체) 전달 받음
 		// statment
-<<<<<<< Updated upstream
+
 		int result = 0;
 		try(PreparedStatement pstmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);){
-=======
-<<<<<<< HEAD
-		
-		try(PreparedStatement pstmt = con.prepareStatement(sql);){
-=======
-		int result = 0;
-		try(PreparedStatement pstmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);){
->>>>>>> 3363a7cc711ef6fe137df1c1c2c2f183253bccb4
->>>>>>> Stashed changes
+	
 			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, dto.getBody());
 			
@@ -41,9 +33,7 @@ public class BoardDao {
 			pstmt.setTimestamp(3, Timestamp.valueOf(now));
 			
 			// execute query
-			int result = pstmt.executeUpdate();
-			
-			return (result == 1);
+			result = pstmt.executeUpdate();
 			
 			// 자동생성된 키 얻기
 			try(ResultSet rs = pstmt.getGeneratedKeys();) {
@@ -51,6 +41,9 @@ public class BoardDao {
 					dto.setId(rs.getInt(1));
 				}
 			} 
+			
+			return (result == 1);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -63,9 +56,12 @@ public class BoardDao {
 		
 		List<BoardDto> list = new ArrayList<>();
 		
-		String sql = "SELECT id, title, inserted "
-				+ "From Board "
-				+ "ORDER BY id DESC "
+		String sql = "SELECT b.id, b.title, b.inserted, COUNT(r.id) numOfReply "
+				+ "From Board b "
+				+ "LEFT JOIN Reply r "
+				+ "ON b.id = r.board_id "
+				+ "GROUP BY b.id "
+				+ "ORDER BY b.id DESC "
 				+ "LIMIT ?, 10";
 
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
@@ -79,7 +75,8 @@ public class BoardDao {
 					board.setId(rs.getInt(1));
 					board.setTitle(rs.getString(2));
 					board.setInserted(rs.getTimestamp(3).toLocalDateTime());
-
+					board.setNumOfReply(rs.getInt(4));
+					
 					list.add(board);
 				}
 			}
@@ -91,9 +88,11 @@ public class BoardDao {
 	}
 
 	public BoardDto get(Connection con, int id) {
-		String sql = "SELECT id, title, body, inserted "
-				+ "FROM Board "
-				+ "WHERE id = ?";
+		String sql = "SELECT b.id, b.title, b.body, b.inserted, COUNT(r.id) numOfReply "
+				+ "FROM Board b "
+				+ "LEFT JOIN Reply r "
+				+ "ON b.id = r.board_id "
+				+ "WHERE b.id = ? ";
 		
 		try(PreparedStatement pstmt = con.prepareStatement(sql);){
 			
@@ -106,6 +105,7 @@ public class BoardDao {
 					board.setTitle(rs.getString(2));
 					board.setBody(rs.getString(3));
 					board.setInserted(rs.getTimestamp(4).toLocalDateTime());
+					board.setNumOfReply(rs.getInt(5));
 					
 					return board;
 				}

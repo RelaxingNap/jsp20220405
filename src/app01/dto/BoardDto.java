@@ -8,6 +8,7 @@ public class BoardDto {
 	private String body;
 	private int id;
 	private LocalDateTime inserted;
+	private int numOfReply;
 	
 	public String getPrettyInserted() {
 		// 24시간 이내면 시간만
@@ -21,6 +22,14 @@ public class BoardDto {
 		
 	}
 	
+	public int getNumOfReply() {
+		return numOfReply;
+	}
+
+	public void setNumOfReply(int numOfReply) {
+		this.numOfReply = numOfReply;
+	}
+
 	public int getId() {
 		return id;
 	}

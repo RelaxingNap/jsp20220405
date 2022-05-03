@@ -56,6 +56,7 @@ public class BoardGetServlet extends HttpServlet {
 			ReplyDao replyDao = new ReplyDao();
 			List<ReplyDto> replyList = new ArrayList<>();
 			replyList = replyDao.list(con, id);
+			
 			// add attribute
 			request.setAttribute("board", board);
 			request.setAttribute("replyList", replyList);
