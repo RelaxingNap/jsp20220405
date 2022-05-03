@@ -24,6 +24,7 @@
 		
 		pageContext.setAttribute("map1", m1);
 		pageContext.setAttribute("map2", m2);
+		
 	%>
 
 	<p>${map1["boy group"] }</p> <%-- bts --%>

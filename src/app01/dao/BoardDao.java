@@ -20,8 +20,18 @@ public class BoardDao {
 		// connection 전달받음
 		// dto(java beans객체) 전달 받음
 		// statment
+<<<<<<< Updated upstream
 		int result = 0;
 		try(PreparedStatement pstmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);){
+=======
+<<<<<<< HEAD
+		
+		try(PreparedStatement pstmt = con.prepareStatement(sql);){
+=======
+		int result = 0;
+		try(PreparedStatement pstmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);){
+>>>>>>> 3363a7cc711ef6fe137df1c1c2c2f183253bccb4
+>>>>>>> Stashed changes
 			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, dto.getBody());
 			
@@ -31,7 +41,9 @@ public class BoardDao {
 			pstmt.setTimestamp(3, Timestamp.valueOf(now));
 			
 			// execute query
-			result = pstmt.executeUpdate();
+			int result = pstmt.executeUpdate();
+			
+			return (result == 1);
 			
 			// 자동생성된 키 얻기
 			try(ResultSet rs = pstmt.getGeneratedKeys();) {
@@ -44,7 +56,7 @@ public class BoardDao {
 		}
 						
 		// 결과 return
-		return result == 1;
+		return false;
 	}
 
 	public List<BoardDto> list(Connection con, int startRowNum) {
@@ -123,5 +135,45 @@ public class BoardDao {
 		}
 		
 		return 0;
+	}
+
+	public boolean modify(Connection con, BoardDto board) {
+		String sql = "UPDATE Board "
+				+ "SET title = ?, "
+				+ "	   body = ? "
+				+ "WHERE id = ? ";
+		
+		try(PreparedStatement pstmt = con.prepareStatement(sql);){
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getBody());
+			pstmt.setInt(3, board.getId());
+			
+			int count = pstmt.executeUpdate();
+			
+			return count == 1;
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+				
+		return false;
+	}
+
+	public boolean delete(Connection con, int id) {
+		String sql = "DELETE FROM Board "
+				+ "WHERE id = ? ";
+		
+		try(PreparedStatement pstmt = con.prepareStatement(sql);){
+			pstmt.setInt(1, id);
+			
+			int count = pstmt.executeUpdate();
+			
+			return count == 1;
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }

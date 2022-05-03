@@ -15,81 +15,70 @@ import app01.dao.BoardDao;
 import app01.dto.BoardDto;
 
 /**
- * Servlet implementation class BoardInsertServlet
+ * Servlet implementation class BoardModifyServlet
  */
-@WebServlet("/board/insert")
-public class BoardInsertServlet extends HttpServlet {
+@WebServlet("/board/modify")
+public class BoardModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private DataSource ds;
-	
+	private DataSource ds;   
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardInsertServlet() {
+    public BoardModifyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
-    @Override
+    
     public void init() throws ServletException { 
     	// 한번만 실행되면 되고, application영역이기 때문에, init()에서 처음에 미리 실행시켜둠
     	// 잘 안씀.
     	ServletContext application = getServletContext();
     	this.ds = (DataSource) application.getAttribute("dbpool");
     }
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-//		String path = "/WEB-INF/view/app01/insert.jsp";
-//		request.getRequestDispatcher(path).forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// request 파라미터 가공
+		// request parameter가공
 		String title = request.getParameter("title");
 		String body = request.getParameter("body");
-		boolean success = false;
-		//dto : data transfer object. 정보전달 객체. javabeans객체
-		BoardDto dto = new BoardDto();
-		dto.setTitle(title);
-		dto.setBody(body);
-		// db에 전달할 내용 세팅
-		// 전달 시 외부환경세팅(인코딩방식 같은것)은 필터로 세팅할것
+		String idStr = request.getParameter("id");
+		int id = Integer.parseInt(idStr);
 		
-		// db에 입력 -> 따로 뺌. 유지보수하기 힘듬.
-		 
-		try (Connection con = ds.getConnection();) {
-
-			// DAO (Data Access Object) - DB에 접근하여 query를 실행하는 java객체
-			// 각 method마다 필요한 query문을 작성해 놓고 실행하면됨.
-			BoardDao dao = new BoardDao();
-			success = dao.insert(con, dto);
-			
-		} catch (Exception e) {
+		BoardDto board = new BoardDto();
+		board.setId(id);
+		board.setBody(body);
+		board.setTitle(title);
+		// business logic 처리
+		boolean success = false;
+		BoardDao dao = new BoardDao();
+		
+		try(Connection con = ds.getConnection();){
+			 success = dao.modify(con,board);
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		// forward /redirect
-<<<<<<< Updated upstream
-		String path = request.getContextPath() + "/board/get?id=" + dto.getId();
-=======
-<<<<<<< HEAD
-		String path = request.getContextPath() + "/board/list";
+		
+		// 결과 attribute 넣고
+		
+		// forward or redirect
+		String location = request.getContextPath() + "/board/get?id=" + id;
 		if(success) {
-			path += "?successInsert=true";
+			location += "&success=true";
 		} else {
-			path += "?successInsert=false";
+			location += "&success=false";
 		}
-				
-=======
-		String path = request.getContextPath() + "/board/get?id=" + dto.getId();
->>>>>>> 3363a7cc711ef6fe137df1c1c2c2f183253bccb4
->>>>>>> Stashed changes
-		response.sendRedirect(path);
+		
+		response.sendRedirect(location);
 	}
 
 }
