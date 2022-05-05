@@ -2,6 +2,7 @@ package app01;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import app01.dao.BoardDao;
+import app01.dao.ReplyDao;
 
 /**
  * Servlet implementation class BoardRemoveServlet
@@ -53,10 +55,40 @@ public class BoardRemoveServlet extends HttpServlet {
 		boolean success = false;
 		// 비지니스 로직 처리(db crud)
 		BoardDao dao = new BoardDao();
-		try(Connection con = ds.getConnection();){
+		ReplyDao replyDao = new ReplyDao();
+		
+		Connection con = null; 
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			
+			replyDao.deleteByBoardId(con, id);
+			
+			/*int i = 0;
+			int j = 3 / i; // ArithmeticException
+			트랜잭션처리를 잘 생각해서 해야함.
+			*/			
 			success = dao.delete(con,id);
+						
+			con.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
+			if(con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}				
+			}
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		// 결과 set
